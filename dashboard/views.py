@@ -5,6 +5,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.admin.sites import site
 
 
+from django.contrib.auth.decorators import login_required
+@login_required
 def dashboard_home(request):
     models = []
     for model, model_admin in site._registry.items():
@@ -30,6 +32,7 @@ def get_registered_models():
         })
     return models
 
+@login_required
 def model_list(request, app_label, model_name):
     model = get_model(app_label, model_name)
     objects = model.objects.all()
@@ -43,6 +46,7 @@ def model_list(request, app_label, model_name):
         'models': models,
     })
 
+@login_required
 def model_add(request, app_label, model_name):
     model = get_model(app_label, model_name)
     Form = modelform_factory(model, exclude=[])
@@ -57,6 +61,7 @@ def model_add(request, app_label, model_name):
         form = Form()
     return render(request, 'dashboard/model_form.html', {'form': form, 'action': 'Add', 'models': models})
 
+@login_required
 def model_edit(request, app_label, model_name, pk):
     model = get_model(app_label, model_name)
     obj = get_object_or_404(model, pk=pk)
@@ -72,6 +77,8 @@ def model_edit(request, app_label, model_name, pk):
         form = Form(instance=obj)
     return render(request, 'dashboard/model_form.html', {'form': form, 'action': 'Edit', 'models': models})
 
+
+@login_required
 def model_delete(request, app_label, model_name, pk):
     model = get_model(app_label, model_name)
     obj = get_object_or_404(model, pk=pk)
