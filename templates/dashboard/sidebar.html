@@ -1,0 +1,4 @@
+<a href="{% url 'dashboard:home' %}" class="fw-bold mb-3 d-block text-white">Home</a>
+{% for model in models %}
+  <a href="{% url 'dashboard:model_list' model.app_label model.name %}">{{ model.verbose_name }}</a>
+{% endfor %}

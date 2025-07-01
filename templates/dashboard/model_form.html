@@ -1,0 +1,15 @@
+{% extends "dashboard/base.html" %}
+{% load custom_tags %}
+{% block sidebar %}{% include 'dashboard/sidebar.html' %}{% endblock %}
+{% block content %}
+<h2>{{ action }} {{ form.instance|verbose_name }}</h2>
+
+<form method="post" enctype="multipart/form-data" class="mt-3">
+  {% csrf_token %}
+  <div class="mb-3">
+    {{ form.as_p }}
+  </div>
+  <button type="submit" class="btn btn-primary">{{ action }}</button>
+  <a href="{% url 'dashboard:model_list' request.resolver_match.kwargs.app_label request.resolver_match.kwargs.model_name %}" class="btn btn-secondary ms-2">Cancel</a>
+</form>
+{% endblock %}

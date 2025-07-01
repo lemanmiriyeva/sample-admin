@@ -1,0 +1,18 @@
+{% extends "dashboard/base.html" %}
+{% block sidebar %}{% include 'dashboard/sidebar.html' %}{% endblock %}
+{% block content %}
+<h1>Welcome to Admin Dashboard</h1>
+
+<div class="row">
+  {% for model in models %}
+    <div class="col-md-4 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">{{ model.verbose_name }}</h5>
+          <a href="{% url 'dashboard:model_list' model.app_label model.name %}" class="btn btn-primary">Manage</a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
